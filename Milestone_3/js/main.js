@@ -13,5 +13,5 @@ function fibonacciSequence (x) {
 
 let htmlX = document.getElementById('firstNumber');
 let htmlY = document.getElementById('secondNumber');
-htmlX.innerText = 7;
+htmlX.innerText = 13;
 htmlY.innerText = fibonacciSequence(htmlX.innerText);
