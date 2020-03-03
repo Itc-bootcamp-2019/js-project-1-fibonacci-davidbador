@@ -4,7 +4,7 @@ function fibonacciSequence(x) {
     }).then(data => {
         answer.innerText = data.result;
     }).catch(err => {
-        answer.innerText = 'Please enter a number greater than 0!'
+        answer.innerText = 'Please enter a valid number!'
     })
 }
 
