@@ -23,6 +23,6 @@ function fibonacciResult () {
     } else if (re.test(inputField.value) === true && inputField.value == 0)  {
         answer.innerText = 0;
     } else if (re.test(inputField.value) === false || inputField.value < 0) {
-        answer.innerText = 'Please enter a valid number!';
+        answer.innerText = 'Please enter a valid number that is equal to or greater than 0!';
     }
 }
