@@ -3,6 +3,7 @@ const inputField = document.getElementById('chosenNumber');
 const button = document.getElementById('buttonForResult');
 const answer = document.getElementById('resultArea');
 const alert = document.getElementById('alert');
+const history = document.getElementById('resultsHistory');
 loader.className = 'hide';
 alert.classList.add('hide');
 
@@ -25,30 +26,39 @@ function fibonacciSequence(x) {
                 answer.innerText = 'Please enter a valid number!';
             }, 1000);
         }
-})}
+    })
+}
 
 function validateInput() {
-    if (inputField.value > 50) {
-        alert.className = alert.className.replace('hide', 'show');
-        answer.className = 'hide';
-        button.disabled = true;
-    } else {
-        alert.className = alert.className.replace('show', 'hide');
-        button.disabled = false;
+    alert.className = alert.className.replace('hide', 'show');
+    answer.className = 'hide';
+}
+
+function validNumber() {
+    if (inputField.value === "") {
+        inputField.classList.remove("invalid");
+        alert.className = 'hide';
     }
 }
 
 function showLoader() {
-    loader.className = 'show';
-    answer.className = 'hide';
-    setTimeout(() => {
-        loader.className = loader.className.replace("show", "hide");
-        answer.className = answer.className.replace("hide", "show");
-    }, 2000);
+    if (inputField.value > 50) {
+        inputField.className = 'invalid'
+        validateInput()
+    } else {
+        inputField.classList.remove('invalid');
+        alert.className = alert.className.replace('show', 'hide');
+        loader.className = 'show';
+        answer.className = 'hide';
+        setTimeout(() => {
+            loader.className = loader.className.replace("show", "hide");
+            answer.className = answer.className.replace("hide", "show");
+        }, 2000);
+    }
 }
 
 button.addEventListener('click', fibonacciResult);
-inputField.addEventListener('keyup', validateInput);
+inputField.addEventListener('keyup', validNumber);
 
 function fibonacciResult() {
     fibonacciSequence(inputField.value);

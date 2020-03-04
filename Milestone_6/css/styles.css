@@ -6,7 +6,7 @@ input {
   width: 5%;
 }
 
-input:invalid {
+.invalid {
   border: 1px solid #FF0000;
   color: #FF0000;
 }
