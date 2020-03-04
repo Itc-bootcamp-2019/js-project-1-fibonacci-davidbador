@@ -1,0 +1,76 @@
+label {
+  margin-right: 20px;
+}
+
+input {
+  width: 5%;
+}
+
+input:invalid {
+  border: 1px solid #FF0000;
+  color: #FF0000;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.btn {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#loader {
+  width: 30px;
+  height: 30px;
+
+  border: 2px solid #f3f3f3;
+  border-top: 3px solid black;
+  border-radius: 100%;
+
+  position: absolute;
+  left: 275px;
+  top: 60px;
+
+  animation-name: spin;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+
+#loader.show {
+  visibility: visible;
+}
+
+#loader.hide, #resultArea.hide {
+  visibility: hidden;
+}
+
+#resultArea.show {
+  visibility: visible;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#resultArea.error {
+  color: red;
+}
+
+#alert.hide {
+  visibility: hidden;
+}
+
+#alert.show {
+  visibility: visible;
+  font-size: 12px;
+  width: 165px;
+  position: absolute;
+  left: 50px;
+}
