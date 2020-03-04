@@ -4,10 +4,10 @@ function fibonacciSequence (x) {
     let y = 1;
     
     if (x >= 1) {
-        for (let i = 0; i < x; i++) {
-            y = firstNum + secondNum
-            secondNum = firstNum;
-            firstNum = y;
+        for (let i = 1; i < x; i++) {
+            y = firstNum + secondNum;
+            firstNum = secondNum;
+            secondNum = y;
         }
     } else if (x == 0) {
         return 0;
@@ -17,5 +17,5 @@ function fibonacciSequence (x) {
 
 let htmlX = document.getElementById('firstNumber');
 let htmlY = document.getElementById('secondNumber');
-htmlX.innerText = 3;
+htmlX.innerText = 0;
 htmlY.innerText = fibonacciSequence(htmlX.innerText);
