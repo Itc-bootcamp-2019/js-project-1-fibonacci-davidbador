@@ -9,22 +9,31 @@ alert.classList.add('hide');
 
 function fibonacciSequence(x) {
     showLoader()
-    fetch('http://localhost:5050/fibonacci/' + x).then(response => {
-        return response.json()
-    }).then(data => {
-        setTimeout(() => {
-            answer.innerText = data.result;
-        }, 1000);
-    }).catch(err => {
-        if (x == 42) {
+    if (x == 42) {
+        fibonacci42(x)
+    } else {
+        fetch('http://localhost:5050/fibonacci/' + x).then(response => {
+            return response.json()
+        }).then(data => {
             setTimeout(() => {
-                answer.className = 'error';
-                answer.innerText = 'Server Error: 42 is the meaning of life';
-            }, 1380);
-        } else {
+                answer.innerText = data.result;
+            }, 1000);
+        }).catch(err => {
             setTimeout(() => {
                 answer.innerText = 'Please enter a valid number!';
             }, 1000);
+        })
+    }
+}
+
+function fibonacci42(x) {
+    showLoader()
+    fetch('http://localhost:5050/fibonacci/' + x).then(response => response.text()).then((text) => {
+        if (x == 42) {
+            setTimeout(() => {
+                answer.className = 'error';
+                answer.innerText = `Server Error: ${text}`;
+            }, 1380)
         }
     })
 }
