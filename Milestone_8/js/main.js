@@ -1,0 +1,139 @@
+const loader = document.getElementById('loader');
+const loaderTimeline = document.getElementById('loaderTimeline');
+const inputField = document.getElementById('chosenNumber');
+const button = document.getElementById('buttonForResult');
+const answer = document.getElementById('resultArea');
+const alert = document.getElementById('alert');
+const history = document.getElementById('resultsHistory');
+const save = document.getElementById('saveCalculation');
+loader.classList.add('hide');
+alert.classList.add('hide');
+loaderTimeline.classList.add('show');
+
+function fibonacciSequence(x) {
+    showLoader()
+    if (save.checked === false) {
+        answer.innerText = fibonacciRecursion(inputField.value);
+    } else {
+        fetch('http://localhost:5050/fibonacci/' + x)
+            .then(response => {
+                return response.json()
+            }).then(data => {
+                setTimeout(() => {
+                    answer.innerText = data.result;
+                }, 1000);
+            }).catch(err => {
+                if (x > 50) {
+                    showLoader()
+                } else if (x == 42) {
+                    fibonacci42(x)
+                } else {
+                    setTimeout(() => {
+                        answer.innerText = 'Please enter a valid number!';
+                    }, 1000);
+                }
+            })
+    }
+}
+
+
+function fibonacci42(x) {
+    showLoader()
+    fetch('http://localhost:5050/fibonacci/' + x).then(response => response.text()).then((text) => {
+        setTimeout(() => {
+            answer.className = 'error';
+            answer.innerText = `Server Error: ${text}`;
+        }, 780)
+    })
+}
+
+function fibonacciRecursion(x) {
+    if (x > 1) {
+        return fibonacciRecursion(x - 1) + fibonacciRecursion(x - 2);
+    } else if (x == 1) {
+        return 1;
+    } else if (x == 0) {
+        return 0;
+    }
+}
+
+function fibonacciHistory() {
+    fetch('http://localhost:5050/getFibonacciResults').then(response => {
+        return response.json()
+    }).then(data => {
+        data.results.forEach(function (object) {
+            let milliseconds = new Date(object.createdDate);
+            let historyChild = document.createElement('div');
+            history.appendChild(historyChild);
+            history.classList.add('show')
+            historyChild.className = 'childDiv'
+            historyChild.id = 'childDiv'
+            historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
+        })
+    })
+}
+
+function refreshHistory() {
+    if (inputField.value > 50) {
+        showLoader()
+    } else if (save.checked === false) {
+        loaderTimeline.classList.replace('show', 'hide');
+        history.classList.replace('hide', 'show');
+    } else {
+        loaderTimeline.classList.replace('hide', 'show');
+        history.classList.replace('show', 'hide');
+        let child = history.lastElementChild;
+        while (child) {
+            history.removeChild(child);
+            child = history.lastElementChild;
+        }
+        setTimeout(() => {
+            loaderTimeline.classList.replace('show', 'hide');
+            history.classList.replace('hide', 'show');
+            fibonacciHistory();
+        }, 900)
+    }
+}
+
+function validateInput() {
+    alert.className = alert.className.replace('hide', 'show');
+    answer.className = 'hide';
+}
+
+function validNumber() {
+    if (inputField.value === "") {
+        inputField.classList.remove("invalid");
+        alert.className = 'hide';
+    }
+}
+
+function showLoader() {
+    inputField.classList.add('invalid');
+    validateInput()
+    if (inputField.value < 50) {
+        inputField.classList.remove('invalid');
+        alert.className = alert.className.replace('show', 'hide');
+        loader.classList.replace('hide', 'show');
+        answer.className = 'hide';
+        setTimeout(() => {
+            loader.classList.replace("show", "hide");
+            answer.className = answer.className.replace("hide", "show");
+        }, 2000);
+    }
+}
+
+button.addEventListener('click', fibonacciResult);
+button.addEventListener('click', refreshHistory);
+inputField.addEventListener('keyup', validNumber);
+
+function fibonacciResult() {
+    fibonacciSequence(inputField.value);
+}
+
+setTimeout(() => {
+    loaderTimeline.classList.replace('show', 'hide');
+}, 2000)
+
+window.onload = setTimeout(() => {
+    fibonacciHistory()
+}, 1300)
