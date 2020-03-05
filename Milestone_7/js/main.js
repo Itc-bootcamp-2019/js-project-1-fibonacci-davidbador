@@ -11,47 +11,71 @@ loaderTimeline.classList.add('show');
 
 function fibonacciSequence(x) {
     showLoader()
-    if (x == 42) {
-        fibonacci42(x)
-    } else {
-        fetch('http://localhost:5050/fibonacci/' + x).then(response => {
+    fetch('http://localhost:5050/fibonacci/' + x)
+        .then(response => {
             return response.json()
         }).then(data => {
             setTimeout(() => {
                 answer.innerText = data.result;
             }, 1000);
         }).catch(err => {
-            setTimeout(() => {
-                answer.innerText = 'Please enter a valid number!';
-            }, 1000);
+            if (x > 50) {
+                showLoader()
+            } else if (x == 42) {
+                fibonacci42(x)
+            } else {
+                setTimeout(() => {
+                    answer.innerText = 'Please enter a valid number!';
+                }, 1000);
+            }
         })
-    }
 }
+
 
 function fibonacci42(x) {
     showLoader()
     fetch('http://localhost:5050/fibonacci/' + x).then(response => response.text()).then((text) => {
-        if (x == 42) {
-            setTimeout(() => {
-                answer.className = 'error';
-                answer.innerText = `Server Error: ${text}`;
-            }, 1380)
-        }
+        setTimeout(() => {
+            answer.className = 'error';
+            answer.innerText = `Server Error: ${text}`;
+        }, 780)
     })
 }
 
-function fibonacciHistory () {
+function fibonacciHistory() {
     fetch('http://localhost:5050/getFibonacciResults').then(response => {
         return response.json()
     }).then(data => {
-        data.results.forEach(function(object) {
+        data.results.forEach(function (object) {
             let milliseconds = new Date(object.createdDate);
             let historyChild = document.createElement('div');
             history.appendChild(historyChild);
+            history.classList.add('show')
             historyChild.className = 'childDiv'
-            historyChild.innerHTML += "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
+            historyChild.id = 'childDiv'
+            historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
         })
-    })}
+    })
+}
+
+function refreshHistory() {
+    if (inputField.value > 50) {
+        showLoader()
+    } else {
+        loaderTimeline.classList.replace('hide', 'show');
+        history.classList.replace('show', 'hide');
+        let child = history.lastElementChild;
+        while (child) {
+            history.removeChild(child);
+            child = history.lastElementChild;
+        }
+        setTimeout(() => {
+            loaderTimeline.classList.replace('show', 'hide');
+            history.classList.replace('hide', 'show');
+            fibonacciHistory();
+        }, 900)
+    }
+}
 
 function validateInput() {
     alert.className = alert.className.replace('hide', 'show');
@@ -66,10 +90,9 @@ function validNumber() {
 }
 
 function showLoader() {
-    if (inputField.value > 50) {
-        inputField.classList.add('invalid');
-        validateInput()
-    } else {
+    inputField.classList.add('invalid');
+    validateInput()
+    if (inputField.value < 50) {
         inputField.classList.remove('invalid');
         alert.className = alert.className.replace('show', 'hide');
         loader.classList.replace('hide', 'show');
@@ -82,6 +105,7 @@ function showLoader() {
 }
 
 button.addEventListener('click', fibonacciResult);
+button.addEventListener('click', refreshHistory);
 inputField.addEventListener('keyup', validNumber);
 
 function fibonacciResult() {
@@ -92,6 +116,6 @@ setTimeout(() => {
     loaderTimeline.classList.replace('show', 'hide');
 }, 2000)
 
-document.onload = setTimeout(() => {
+window.onload = setTimeout(() => {
     fibonacciHistory()
 }, 1300)
