@@ -22,22 +22,11 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-right: 10px;
 }
 
-#loader {
-  width: 30px;
-  height: 30px;
-
-  border: 2px solid #f3f3f3;
-  border-top: 3px solid black;
-  border-radius: 100%;
-
-  position: absolute;
-  left: 275px;
-  top: 60px;
-
-  animation-name: spin;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+#loader.show {
+  display: inline-flex;
+  position: relative;
+  top: 8px;
+  left: 0;
 }
 
 @keyframes spin {
@@ -50,7 +39,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 #loader.hide, #resultArea.hide {
-  visibility: hidden;
+  display: none;
 }
 
 #resultArea.show {

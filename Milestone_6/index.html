@@ -18,7 +18,9 @@
         <label>The Fibonacci of </label>
         <input id="chosenNumber" type="number" placeholder="#" value="">
         <button id="buttonForResult" class="btn btn-primary">Is</button>
-        <span id="loader"></span>
+        <span id="loader" class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </span>
         <span id="resultArea"></span>
         <div id="alert" class="alert alert-danger">
             Can't be larger than 50
