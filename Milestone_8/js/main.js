@@ -25,7 +25,7 @@ function fibonacciSequence(x) {
             }).then((data) => {
                 setTimeout(() => {
                     answer.innerText = data.result;
-                })
+                }, 900)
             }).catch(err => err.text()).then((errorMessage) => {
                 if (x > 50) {
                     showLoader()
