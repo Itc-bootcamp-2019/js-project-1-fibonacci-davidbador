@@ -9,35 +9,31 @@ alert.classList.add('hide');
 
 function fibonacciSequence(x) {
     showLoader()
-    fetch('http://localhost:5050/fibonacci/' + x).then(response => {
-        return response.json()
-    }).then(data => {
-        setTimeout(() => {
-            answer.innerText = data.result;
-        }, 1000);
-    }).catch(err => {
-        if (x > 50) {
-            showLoader()
-        } else if (x == 42) {
-            fibonacci42(x)
-        } else {
+    fetch('http://localhost:5050/fibonacci/' + x)
+        .then(response => {
+            if (response.status === 200) {
+                return response.json()
+            } else {
+                throw response
+            }
+        }).then((data) => {
             setTimeout(() => {
-                answer.innerText = 'Please enter a valid number!';
-            }, 1000);
-        }
-    })
-}
-
-function fibonacci42(x) {
-    showLoader()
-    fetch('http://localhost:5050/fibonacci/' + x).then(response => response.text()).then((text) => {
-        if (x == 42) {
-            setTimeout(() => {
-                answer.className = 'error';
-                answer.innerText = `Server Error: ${text}`;
-            }, 780)
-        }
-    })
+                answer.innerText = data.result;
+            }, 900)
+        }).catch(err => err.text()).then((errorMessage) => {
+            if (x > 50) {
+                showLoader()
+            } else if (x == 42) {
+                setTimeout(() => {
+                    answer.className = 'error';
+                    answer.innerText = `Server Error: ${errorMessage}`;
+                }, 1400)
+            } else if (x == 0 || x < 0) {
+                setTimeout(() => {
+                    answer.innerText = 'Please enter a valid number!';
+                }, 1000);
+            }
+        })
 }
 
 function validateInput() {
