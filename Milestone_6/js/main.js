@@ -23,14 +23,15 @@ function fibonacciSequence(x) {
         }).catch(err => err.text()).then((errorMessage) => {
             if (x > 50) {
                 showLoader()
+                alert.innerText = `${errorMessage}`
             } else if (x == 42) {
                 setTimeout(() => {
                     answer.className = 'error';
                     answer.innerText = `Server Error: ${errorMessage}`;
                 }, 1400)
-            } else if (x == 0 || x < 0) {
+            } else if (x < 1) {
                 setTimeout(() => {
-                    answer.innerText = 'Please enter a valid number!';
+                    answer.innerText = `${errorMessage}`;
                 }, 1000);
             }
         })
@@ -49,10 +50,11 @@ function validNumber() {
 }
 
 function showLoader() {
-    if (inputField.value > 50) {
+    setTimeout(() => {
         inputField.className = 'invalid'
         validateInput()
-    } else {
+    }, 600)
+    if (inputField.value < 50) {
         inputField.classList.remove('invalid');
         alert.className = alert.className.replace('show', 'hide');
         loader.classList.replace('hide', 'show');
