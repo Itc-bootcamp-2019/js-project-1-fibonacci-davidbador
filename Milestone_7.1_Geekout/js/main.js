@@ -20,22 +20,6 @@ async function fibonacciSequence(x) {
     }
 }
 
-// ).catch(err => err.text()).then((errorMessage) => {
-//         if (x > 50) {
-//             showLoader()
-//         } else if (x == 42) {
-//             setTimeout(() => {
-//                 answer.className = 'error';
-//                 answer.innerText = `Server Error: ${errorMessage}`;
-//             }, 1400)
-//         } else if (x == 0 || x < 0) {
-//             setTimeout(() => {
-//                 answer.innerText = 'Please enter a valid number!';
-//             }, 1000);
-//         }
-//     })
-// }
-
 function fibonacciHistory() {
     fetch('http://localhost:5050/getFibonacciResults').then(response => {
         return response.json()
@@ -102,12 +86,26 @@ button.addEventListener('click', fibonacciResult);
 button.addEventListener('click', refreshHistory);
 inputField.addEventListener('keyup', validNumber);
 
-function fibonacciResult() {
-    fibonacciSequence(inputField.value).then((data) =>
+async function fibonacciResult() {
+    try {
+        let sequence = await fibonacciSequence(inputField.value);
         setTimeout(() => {
-            answer.innerText = data.result;
+            answer.innerText = sequence.result;
         }, 900)
-    )
+    } catch (err) {
+        if (inputField.value > 50) {
+            showLoader()
+        } else if (inputField.value == 42) {
+            setTimeout(() => {
+                answer.className = 'error';
+                answer.innerText = `Server Error: ${err}`;
+            }, 1400)
+        } else if (inputField.value == 0 || inputField.value < 0) {
+            setTimeout(() => {
+                answer.innerText = 'Please enter a valid number!';
+            }, 1000);
+        }
+    }
 }
 
 setTimeout(() => {
