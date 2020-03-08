@@ -12,19 +12,42 @@ let re = /^\d+$/;
 
 async function fibonacciSequence(x) {
     showLoader()
-    let response = await fetch('http://localhost:5050/fibonacci/' + x);
-    let data = await response.json();
-    if (response.status === 200) {
-        return data
-    } else {
-        throw response
+    try {
+        let response = await fetch('http://localhost:5050/fibonacci/' + x);
+        if (response.status == 200) {
+            let data = await response.json();
+            setTimeout(() => {
+                answer.innerText = data.result;
+            }, 900)
+        } else {
+            let text = await response.text();
+            throw Error(text)
+        }
+    } catch (err) {
+        if (x > 50) {
+            showLoader()
+            alert.innerText = `${err.message}`
+        } else if (x == 42) {
+            setTimeout(() => {
+                answer.className = 'error';
+                answer.innerText = `Server Error: ${err.message}`;
+            }, 1400)
+        } else if (re.test(x) === false) {
+            setTimeout(() => {
+                answer.innerText = 'Please enter a valid number';
+            }, 1000);
+        } else if (x < 1) {
+            setTimeout(() => {
+                answer.innerText = `${err.message}`;
+            }, 1000);
+        }
     }
 }
 
-function fibonacciHistory() {
-    fetch('http://localhost:5050/getFibonacciResults').then(response => {
-        return response.json()
-    }).then(data => {
+async function fibonacciHistory() {
+    try {
+        let response = await fetch('http://localhost:5050/getFibonacciResults')
+        let data = await response.json()
         data.results.sort(function (a, b) {
             return new Date(b.createdDate) - new Date(a.createdDate)
         })
@@ -37,7 +60,9 @@ function fibonacciHistory() {
             historyChild.id = 'childDiv'
             historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
         })
-    })
+    } catch (err) {
+        return null
+    }
 }
 
 function refreshHistory() {
@@ -92,31 +117,8 @@ function showLoader() {
     }
 }
 
-async function fibonacciResult() {
-    try {
-        let sequence = await fibonacciSequence(inputField.value);
-        setTimeout(() => {
-            answer.innerText = sequence.result;
-        }, 900)
-    } catch (err) {
-        if (inputField.value > 50) {
-            showLoader()
-            alert.innerText = `${err.message}`
-        } else if (inputField.value == 42) {
-            setTimeout(() => {
-                answer.className = 'error';
-                answer.innerText = `Server Error: ${err.message}`;
-            }, 1400)
-        } else if (re.test(inputField.value) === false) {
-            setTimeout(() => {
-                answer.innerText = 'Please enter a valid number';
-            }, 1000);
-        } else if (inputField.value < 1) {
-            setTimeout(() => {
-                answer.innerText = `${err.message}`;
-            }, 1000);
-        }
-    }
+function fibonacciResult() {
+    fibonacciSequence(inputField.value)
 }
 
 button.addEventListener('click', fibonacciResult);
