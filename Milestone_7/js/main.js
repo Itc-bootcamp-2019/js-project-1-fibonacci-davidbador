@@ -8,6 +8,7 @@ const history = document.getElementById('resultsHistory');
 loader.classList.add('hide');
 alert.classList.add('hide');
 loaderTimeline.classList.add('show');
+let re = /^\d+$/;
 
 function fibonacciSequence(x) {
     showLoader()
@@ -25,14 +26,19 @@ function fibonacciSequence(x) {
         }).catch(err => err.text()).then((errorMessage) => {
             if (x > 50) {
                 showLoader()
+                alert.innerHTML = `${errorMessage}`
             } else if (x == 42) {
                 setTimeout(() => {
                     answer.className = 'error';
                     answer.innerText = `Server Error: ${errorMessage}`;
                 }, 1400)
-            } else if (x == 0 || x < 0) {
+            } else if (re.test(x) === false) {
                 setTimeout(() => {
-                    answer.innerText = 'Please enter a valid number!';
+                    answer.innerText = 'Please enter a valid number';
+                }, 1000);
+            } else if (x < 1) {
+                setTimeout(() => {
+                    answer.innerText = `${errorMessage}`;
                 }, 1000);
             }
         })
@@ -74,23 +80,27 @@ function refreshHistory() {
 }
 
 function validateInput() {
-    alert.className = alert.className.replace('hide', 'show');
-    answer.className = 'hide';
+    if (inputField.value > 50) {
+        alert.classList.replace('hide', 'show');
+        answer.className = 'hide';
+        inputField.classList.add('invalid');
+    }
 }
 
 function validNumber() {
-    if (inputField.value === "") {
+    if (inputField.value == "") {
         inputField.classList.remove("invalid");
-        alert.className = 'hide';
+        alert.classList.replace('show', 'hide');
+        answer.classList.replace('show', 'hide');
+        answer.classList.replace('error', 'hide');
     }
 }
 
 function showLoader() {
-    inputField.classList.add('invalid');
     validateInput()
     if (inputField.value < 50) {
         inputField.classList.remove('invalid');
-        alert.className = alert.className.replace('show', 'hide');
+        alert.classList.replace('show', 'hide');
         loader.classList.replace('hide', 'show');
         answer.className = 'hide';
         setTimeout(() => {
