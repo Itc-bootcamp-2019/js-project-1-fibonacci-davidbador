@@ -1,3 +1,9 @@
+let re = /^\d+$/;
+const inputField = document.getElementById('chosenNumber');
+const button = document.getElementById('buttonForResult');
+const answer = document.getElementById('resultArea');
+button.addEventListener('click', fibonacciResult)
+
 function fibonacciSequence(x) {
     let firstNum = 0;
     let secondNum = 1;
@@ -14,12 +20,6 @@ function fibonacciSequence(x) {
     }
     return y
 }
-
-let re = /^\d+$/;
-const inputField = document.getElementById('chosenNumber');
-const button = document.getElementById('buttonForResult');
-const answer = document.getElementById('resultArea');
-button.addEventListener('click', fibonacciResult)
 
 function fibonacciResult() {
     if (re.test(inputField.value) === true && inputField.value >= 1) {
