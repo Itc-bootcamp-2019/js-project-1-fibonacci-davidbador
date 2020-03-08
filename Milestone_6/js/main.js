@@ -75,9 +75,9 @@ function showLoader() {
     }
 }
 
-button.addEventListener('click', fibonacciResult);
-inputField.addEventListener('keyup', validNumber);
-
 function fibonacciResult() {
     fibonacciSequence(inputField.value);
 }
+
+button.addEventListener('click', fibonacciResult);
+inputField.addEventListener('keyup', validNumber);
