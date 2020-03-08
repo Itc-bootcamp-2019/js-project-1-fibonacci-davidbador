@@ -48,6 +48,9 @@ function fibonacciHistory() {
     fetch('http://localhost:5050/getFibonacciResults').then(response => {
         return response.json()
     }).then(data => {
+        data.results.sort(function (a, b) {
+            return new Date(b.createdDate) - new Date(a.createdDate)
+        })
         data.results.forEach(function (object) {
             let milliseconds = new Date(object.createdDate);
             let historyChild = document.createElement('div');
