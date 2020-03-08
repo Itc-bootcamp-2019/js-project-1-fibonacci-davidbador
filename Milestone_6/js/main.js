@@ -6,6 +6,7 @@ const alert = document.getElementById('alert');
 const history = document.getElementById('resultsHistory');
 loader.classList.add('hide');
 alert.classList.add('hide');
+let re = /^\d+$/;
 
 function fibonacciSequence(x) {
     showLoader()
@@ -29,6 +30,10 @@ function fibonacciSequence(x) {
                     answer.className = 'error';
                     answer.innerText = `Server Error: ${errorMessage}`;
                 }, 1400)
+            } else if (re.test(x) === false) {
+                setTimeout(() => {
+                    answer.innerText = 'Please enter a valid number';
+                }, 1000);
             } else if (x < 1) {
                 setTimeout(() => {
                     answer.innerText = `${errorMessage}`;
@@ -38,25 +43,29 @@ function fibonacciSequence(x) {
 }
 
 function validateInput() {
-    alert.className = alert.className.replace('hide', 'show');
-    answer.className = 'hide';
+    if (inputField.value > 50) {
+        setTimeout(() => {
+            alert.classList.replace('hide', 'show');
+            answer.className = 'hide';
+            inputField.classList.add('invalid');
+        }, 600)
+    }
 }
 
 function validNumber() {
     if (inputField.value === "") {
         inputField.classList.remove("invalid");
-        alert.className = 'hide';
+        alert.classList.replace('show', 'hide');
+        answer.classList.replace('show', 'hide');
+        answer.classList.replace('error', 'hide');
     }
 }
 
 function showLoader() {
-    setTimeout(() => {
-        inputField.className = 'invalid'
-        validateInput()
-    }, 600)
+    validateInput()
     if (inputField.value < 50) {
         inputField.classList.remove('invalid');
-        alert.className = alert.className.replace('show', 'hide');
+        alert.classList.replace('show', 'hide');
         loader.classList.replace('hide', 'show');
         answer.className = 'hide';
         setTimeout(() => {
