@@ -112,13 +112,13 @@ function showLoader() {
     }
 }
 
-button.addEventListener('click', fibonacciResult);
-button.addEventListener('click', refreshHistory);
-inputField.addEventListener('keyup', validNumber);
-
 function fibonacciResult() {
     fibonacciSequence(inputField.value);
 }
+
+button.addEventListener('click', fibonacciResult);
+button.addEventListener('click', refreshHistory);
+inputField.addEventListener('keyup', validNumber);
 
 setTimeout(() => {
     loaderTimeline.classList.replace('show', 'hide');
