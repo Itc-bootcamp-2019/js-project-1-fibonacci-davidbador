@@ -81,9 +81,11 @@ function refreshHistory() {
 
 function validateInput() {
     if (inputField.value > 50) {
-        alert.classList.replace('hide', 'show');
-        answer.className = 'hide';
-        inputField.classList.add('invalid');
+        setTimeout(() => {
+            alert.classList.replace('hide', 'show');
+            answer.className = 'hide';
+            inputField.classList.add('invalid');
+        }, 600)
     }
 }
 
