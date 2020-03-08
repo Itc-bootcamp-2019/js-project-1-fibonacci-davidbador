@@ -28,10 +28,7 @@ function fibonacciSequence(x) {
                     answer.innerText = data.result;
                 }, 900)
             }).catch(err => err.text()).then((errorMessage) => {
-                if (x > 50) {
-                    showLoader()
-                    alert.innerHTML = `${errorMessage}`
-                } else if (x == 42) {
+                if (x == 42) {
                     setTimeout(() => {
                         answer.className = 'error';
                         answer.innerText = `Server Error: ${errorMessage}`;
