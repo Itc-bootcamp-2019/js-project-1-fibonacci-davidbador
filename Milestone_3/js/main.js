@@ -1,3 +1,8 @@
+// getElementById variables
+const htmlX = document.getElementById('firstNumber');
+const htmlY = document.getElementById('secondNumber');
+
+// Fibonacci Calculation Function
 function fibonacciSequence (x) {
     let firstNum = 0;
     let secondNum = 1;
@@ -15,7 +20,6 @@ function fibonacciSequence (x) {
     return y
 }
 
-let htmlX = document.getElementById('firstNumber');
-let htmlY = document.getElementById('secondNumber');
+// innerText identifiers
 htmlX.innerText = 0;
 htmlY.innerText = fibonacciSequence(htmlX.innerText);
