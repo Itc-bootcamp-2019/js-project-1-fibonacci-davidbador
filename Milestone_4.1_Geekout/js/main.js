@@ -1,8 +1,10 @@
-let re = /^\d+$/;
+// Global Variables
 const inputField = document.getElementById('chosenNumber');
 const button = document.getElementById('buttonForResult');
 const answer = document.getElementById('resultArea');
+const re = /^\d+$/;
 
+// Fibonacci Recursive Calculation Function
 function fibonacciSequence(x) {
     if (x > 1) {
         return fibonacciSequence(x - 1) + fibonacciSequence(x - 2);
@@ -13,6 +15,7 @@ function fibonacciSequence(x) {
     }
 }
 
+// Fibonacci Results Function
 function fibonacciResult() {
     if (re.test(inputField.value) === true && inputField.value >= 0) {
         answer.innerText = fibonacciSequence(inputField.value);
@@ -21,4 +24,5 @@ function fibonacciResult() {
     }
 }
 
+// Event Listeners
 button.addEventListener('click', fibonacciResult);
