@@ -1,13 +1,17 @@
+// Global Variables
 const loader = document.getElementById('loader');
 const inputField = document.getElementById('chosenNumber');
 const button = document.getElementById('buttonForResult');
 const answer = document.getElementById('resultArea');
 const alert = document.getElementById('alert');
 const history = document.getElementById('resultsHistory');
+const re = /^\d+$/;
+
+// JS Class Modifiers
 loader.classList.add('hide');
 alert.classList.add('hide');
-let re = /^\d+$/;
 
+// Fibonacci Fetch API Function
 function fibonacciSequence(x) {
     showLoader()
     if (x > 50) {
@@ -44,6 +48,7 @@ function fibonacciSequence(x) {
     }
 }
 
+// Input Field Invalid Validation Function
 function validateInput() {
     if (inputField.value > 50) {
         setTimeout(() => {
@@ -54,6 +59,7 @@ function validateInput() {
     }
 }
 
+// Input Field Valid Validation Function
 function validNumber() {
     if (inputField.value === "") {
         inputField.classList.remove("invalid");
@@ -63,6 +69,7 @@ function validNumber() {
     }
 }
 
+// Loader Display Function
 function showLoader() {
     validateInput()
     if (inputField.value < 50) {
@@ -77,9 +84,11 @@ function showLoader() {
     }
 }
 
+// Fibonacci Result Function
 function fibonacciResult() {
     fibonacciSequence(inputField.value);
 }
 
+// Event Listeners
 button.addEventListener('click', fibonacciResult);
 inputField.addEventListener('keyup', validNumber);
