@@ -25,27 +25,27 @@ function fibonacciSequence(x) {
                 if (response.status === 200) {
                     return response.json()
                 } else {
-                    throw response
+                    response.text().then(errorMessage => {
+                        if (x == 42) {
+                            setTimeout(() => {
+                                answer.className = 'error';
+                                answer.innerText = `Server Error: ${errorMessage}`;
+                            }, 1400)
+                        } else if (re.test(x) === false) {
+                            setTimeout(() => {
+                                answer.innerText = 'Please enter a valid number';
+                            }, 1000);
+                        } else if (x < 1) {
+                            setTimeout(() => {
+                                answer.innerText = `${errorMessage}`;
+                            }, 1000);
+                        }
+                    })
                 }
             }).then((data) => {
                 setTimeout(() => {
                     answer.innerText = data.result;
                 }, 900)
-            }).catch(err => err.text()).then((errorMessage) => {
-                if (x == 42) {
-                    setTimeout(() => {
-                        answer.className = 'error';
-                        answer.innerText = `Server Error: ${errorMessage}`;
-                    }, 1400)
-                } else if (re.test(x) === false) {
-                    setTimeout(() => {
-                        answer.innerText = 'Please enter a valid number';
-                    }, 1000);
-                } else if (x < 1) {
-                    setTimeout(() => {
-                        answer.innerText = `${errorMessage}`;
-                    }, 1000);
-                }
             })
     }
 }
