@@ -18,7 +18,11 @@ loaderTimeline.classList.add('show');
 async function fibonacciSequence(x) {
     showLoader()
     if (save.checked === false) {
-        answer.innerText = fibonacciRecursion(inputField.value);
+        if (x >= 0 && re.test(x) === true) {
+            answer.innerText = fibonacciRecursion(inputField.value);
+        } else if ( x < 0 || re.test(x) === false) {
+            answer.innerText = 'Please enter a valid number greater than or equal to 0'
+        }
     } else if (save.checked === true && x > 50) {
         showLoader()
         alert.innerText = "number can't be bigger than 50"
