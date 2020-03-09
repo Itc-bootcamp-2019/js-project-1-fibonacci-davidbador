@@ -1,3 +1,4 @@
+// Global Variables
 const loader = document.getElementById('loader');
 const loaderTimeline = document.getElementById('loaderTimeline');
 const inputField = document.getElementById('chosenNumber');
@@ -5,11 +6,14 @@ const button = document.getElementById('buttonForResult');
 const answer = document.getElementById('resultArea');
 const alert = document.getElementById('alert');
 const history = document.getElementById('resultsHistory');
+const re = /^\d+$/;
+
+// JS Class Modifiers
 loader.classList.add('hide');
 alert.classList.add('hide');
 loaderTimeline.classList.add('show');
-let re = /^\d+$/;
 
+// Fibonacci Fetch API Function
 function fibonacciSequence(x) {
     showLoader()
     if (x > 50) {
@@ -46,6 +50,7 @@ function fibonacciSequence(x) {
     }
 }
 
+// Fibonacci Results History Fetch API Function
 function fibonacciHistory() {
     fetch('http://localhost:5050/getFibonacciResults').then(response => {
         return response.json()
@@ -65,6 +70,7 @@ function fibonacciHistory() {
     })
 }
 
+// Fibonacci Results History Refresh Function
 function refreshHistory() {
     if (inputField.value > 50) {
         showLoader()
@@ -84,6 +90,7 @@ function refreshHistory() {
     }
 }
 
+// Input Field Invalid Validation Function
 function validateInput() {
     if (inputField.value > 50) {
         setTimeout(() => {
@@ -94,6 +101,7 @@ function validateInput() {
     }
 }
 
+// Input Field Valid Validation Function
 function validNumber() {
     if (inputField.value == "") {
         inputField.classList.remove("invalid");
@@ -103,6 +111,7 @@ function validNumber() {
     }
 }
 
+// Loader Display Function
 function showLoader() {
     validateInput()
     if (inputField.value < 50) {
@@ -117,14 +126,17 @@ function showLoader() {
     }
 }
 
+// Fibonacci Results Function
 function fibonacciResult() {
     fibonacciSequence(inputField.value);
 }
 
+// Event Listeners
 button.addEventListener('click', fibonacciResult);
 button.addEventListener('click', refreshHistory);
 inputField.addEventListener('keyup', validNumber);
 
+// Window Loaded Completely Functions
 setTimeout(() => {
     loaderTimeline.classList.replace('show', 'hide');
 }, 2000)

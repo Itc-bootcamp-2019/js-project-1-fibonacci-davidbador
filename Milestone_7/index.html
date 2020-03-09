@@ -12,24 +12,40 @@
 
 <body>
     <div class="container-fluid">
+
+        <!-- Fibonacci Calculator Heading -->
         <div class="row">
             <h1 class="col-12">Fibonacci Calculator</h1>
         </div>
+
+        <!-- Fibonacci Calculator -->
         <label>The Fibonacci of </label>
         <input id="chosenNumber" type="number" placeholder="#" value="">
         <button id="buttonForResult" class="btn btn-primary">Is</button>
+
+        <!-- Fibonacci Calculator Loader -->
         <span id="loader" class="spinner-border" role="status">
             <span class="sr-only">Loading...</span>
         </span>
+
+        <!-- Fibonacci Result Display -->
         <span id="resultArea"></span>
+
+        <!-- Alert for numbers over 50 -->
         <div id="alert" class="alert alert-danger">
         </div>
+
+        <!-- Fibonacci Results History Heading -->
         <div class="row resultsTimeline">
             <div class="resultsHistoryHeading">Results</div>
+
+            <!-- Fibonacci Results History Loader -->
             <span id="loaderTimeline" class="spinner-border timelineSpinner" role="status">
                 <span class="sr-only">Loading...</span>
             </span>
         </div>
+
+        <!-- Fibonacci Results History Display -->
         <div id="resultsHistory">
 
         </div>
