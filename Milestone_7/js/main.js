@@ -13,12 +13,16 @@ loader.classList.add('hide');
 alert.classList.add('hide');
 loaderTimeline.classList.add('show');
 
-// Fibonacci Fetch API Function
+// Fibonacci Fetch API Functions
 function fibonacciSequence(x) {
     showLoader()
     if (x > 50) {
         showLoader()
         alert.innerText = "number can't be bigger than 50"
+    } else if (re.test(x) === false) {
+        setTimeout(() => {
+            answer.innerText = 'Please enter a valid number';
+        }, 1000);
     } else {
         fetch('http://localhost:5050/fibonacci/' + x)
             .then(response => {
@@ -31,10 +35,6 @@ function fibonacciSequence(x) {
                                 answer.className = 'error';
                                 answer.innerText = `Server Error: ${errorMessage}`;
                             }, 1400)
-                        } else if (re.test(x) === false) {
-                            setTimeout(() => {
-                                answer.innerText = 'Please enter a valid number';
-                            }, 1000);
                         } else if (x < 1) {
                             setTimeout(() => {
                                 answer.innerText = `${errorMessage}`;
