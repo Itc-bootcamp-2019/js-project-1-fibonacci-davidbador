@@ -40,7 +40,7 @@ input[type="number"]::-webkit-outer-spin-button {
   display: none;
 }
 
-/* Alert for numbers over 50 styling */
+/* Alert for numbers over 50 Styling */
 #alert.hide {
   display: none;
 }
