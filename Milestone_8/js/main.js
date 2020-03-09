@@ -27,30 +27,32 @@ async function fibonacciSequence(x) {
         showLoader()
         alert.innerText = "number can't be bigger than 50"
     } else if (save.checked === true) {
-        let response = await fetch('http://localhost:5050/fibonacci/' + x);
-        if (response.status == 200) {
-            let data = await response.json();
+        if (re.test(x) === false) {
             setTimeout(() => {
-                answer.innerText = data.result;
-            }, 900)
+                answer.innerText = 'Please enter a valid number';
+            }, 1000);
         } else {
-            let text = await response.text();
-            if (x == 42) {
+            let response = await fetch('http://localhost:5050/fibonacci/' + x);
+            if (response.status == 200) {
+                let data = await response.json();
                 setTimeout(() => {
-                    answer.className = 'error';
-                    answer.innerText = `Server Error: ${text}`;
-                }, 1400)
-            } else if (re.test(x) === false) {
-                setTimeout(() => {
-                    answer.innerText = 'Please enter a valid number';
-                }, 1000);
-            } else if (x < 1) {
-                setTimeout(() => {
-                    answer.innerText = `${text}`;
-                }, 1000);
+                    answer.innerText = data.result;
+                }, 900)
+            } else {
+                let text = await response.text();
+                if (x == 42) {
+                    setTimeout(() => {
+                        answer.className = 'error';
+                        answer.innerText = `Server Error: ${text}`;
+                    }, 1400)
+                } else if (x < 1) {
+                    setTimeout(() => {
+                        answer.innerText = `${text}`;
+                    }, 1000);
+                }
             }
-        }
 
+        }
     }
 }
 
