@@ -1,8 +1,10 @@
+// Global variables
 const inputField = document.getElementById('chosenNumber');
 const button = document.getElementById('buttonForResult');
 const answer = document.getElementById('resultArea');
-let re = /^\d+$/;
+const re = /^\d+$/;
 
+// Fibonacci Fetch API Function
 function fibonacciSequence(x) {
     fetch('http://localhost:5050/fibonacci/' + x).then(response => {
         return response.json()
@@ -21,8 +23,10 @@ function fibonacciSequence(x) {
     })
 }
 
+// Fibonacci Calculation Result Function
 function fibonacciResult() {
     fibonacciSequence(inputField.value);
 }
 
+// Event Listeners
 button.addEventListener('click', fibonacciResult)
