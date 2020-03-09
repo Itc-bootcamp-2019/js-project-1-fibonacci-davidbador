@@ -6,25 +6,27 @@ const re = /^\d+$/;
 
 // Fibonacci Fetch API Function
 function fibonacciSequence(x) {
-    fetch('http://localhost:5050/fibonacci/' + x).then(response => {
-        if (response.ok) {
-            return response.json()
-        } else {
-            response.text().then(errorMessage => {
-                if (re.test(x) === false) {
-                    setTimeout(() => {
-                        answer.innerText = 'Please enter a valid number';
-                    }, 1000);
-                } else if (x < 1) {
-                    setTimeout(() => {
-                        answer.innerText = `${errorMessage}`;
-                    }, 1000);
-                }
-            })
-        }
-    }).then(data => {
-        answer.innerText = data.result;
-    })
+    if (re.test(x) === false) {
+        setTimeout(() => {
+            answer.innerText = 'Please enter a valid number';
+        }, 1000);
+    } else {
+        fetch('http://localhost:5050/fibonacci/' + x).then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                response.text().then(errorMessage => {
+                    if (x < 1) {
+                        setTimeout(() => {
+                            answer.innerText = `${errorMessage}`;
+                        }, 1000);
+                    }
+                })
+            }
+        }).then(data => {
+            answer.innerText = data.result;
+        })
+    }
 }
 
 // Fibonacci Calculation Result Function
