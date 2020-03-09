@@ -20,22 +20,18 @@ async function fibonacciSequence(x) {
         showLoader()
         alert.innerText = "number can't be bigger than 50"
     } else {
-        try {
-            let response = await fetch('http://localhost:5050/fibonacci/' + x);
-            if (response.status == 200) {
-                let data = await response.json();
-                setTimeout(() => {
-                    answer.innerText = data.result;
-                }, 900)
-            } else {
-                let text = await response.text();
-                throw Error(text)
-            }
-        } catch (err) {
+        let response = await fetch('http://localhost:5050/fibonacci/' + x);
+        if (response.status == 200) {
+            let data = await response.json();
+            setTimeout(() => {
+                answer.innerText = data.result;
+            }, 900)
+        } else {
+            let text = await response.text();
             if (x == 42) {
                 setTimeout(() => {
                     answer.className = 'error';
-                    answer.innerText = `Server Error: ${err.message}`;
+                    answer.innerText = `Server Error: ${text}`;
                 }, 1400)
             } else if (re.test(x) === false) {
                 setTimeout(() => {
@@ -43,7 +39,7 @@ async function fibonacciSequence(x) {
                 }, 1000);
             } else if (x < 1) {
                 setTimeout(() => {
-                    answer.innerText = `${err.message}`;
+                    answer.innerText = `${text}`;
                 }, 1000);
             }
         }
@@ -52,24 +48,20 @@ async function fibonacciSequence(x) {
 
 // Asynchronous Fibonacci Results History Function
 async function fibonacciHistory() {
-    try {
-        let response = await fetch('http://localhost:5050/getFibonacciResults')
-        let data = await response.json()
-        data.results.sort(function (a, b) {
-            return new Date(b.createdDate) - new Date(a.createdDate)
-        })
-        data.results.forEach(function (object) {
-            let milliseconds = new Date(object.createdDate);
-            let historyChild = document.createElement('div');
-            history.appendChild(historyChild);
-            history.classList.add('show')
-            historyChild.className = 'childDiv'
-            historyChild.id = 'childDiv'
-            historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
-        })
-    } catch (err) {
-        return null
-    }
+    let response = await fetch('http://localhost:5050/getFibonacciResults')
+    let data = await response.json()
+    data.results.sort(function (a, b) {
+        return new Date(b.createdDate) - new Date(a.createdDate)
+    })
+    data.results.forEach(function (object) {
+        let milliseconds = new Date(object.createdDate);
+        let historyChild = document.createElement('div');
+        history.appendChild(historyChild);
+        history.classList.add('show')
+        historyChild.className = 'childDiv'
+        historyChild.id = 'childDiv'
+        historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
+    })
 }
 
 // Fibonacci Results History Refresh Function
