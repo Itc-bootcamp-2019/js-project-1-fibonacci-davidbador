@@ -196,8 +196,8 @@ function loadWindow() {
 }
 
 // Event Listeners
+window.addEventListener('load', loadWindow);
 button.addEventListener('click', fibonacciResult);
 button.addEventListener('click', refreshHistory);
 inputField.addEventListener('keyup', validNumber);
 select.addEventListener('change', sortOrder);
-window.addEventListener('load', loadWindow);
