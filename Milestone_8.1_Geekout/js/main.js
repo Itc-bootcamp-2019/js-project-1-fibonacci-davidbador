@@ -185,7 +185,6 @@ function fibonacciResult() {
 }
 
 // Window Loaded Completely Function
-
 function loadWindow() {
     setTimeout(() => {
         loaderTimeline.classList.replace('show', 'hide');
