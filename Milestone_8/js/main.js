@@ -4,14 +4,14 @@ const loaderTimeline = document.getElementById('loaderTimeline');
 const inputField = document.getElementById('chosenNumber');
 const button = document.getElementById('buttonForResult');
 const answer = document.getElementById('resultArea');
-const alert = document.getElementById('alert');
+const alertOver50 = document.getElementById('alert');
 const history = document.getElementById('resultsHistory');
 const save = document.getElementById('saveCalculation');
 const re = /^\d+$/;
 
 // JS Class Modifiers
 loader.classList.add('hide');
-alert.classList.add('hide');
+alertOver50.classList.add('hide');
 loaderTimeline.classList.add('show');
 
 // Asynchronous Fibonacci Calculator Function
@@ -25,7 +25,7 @@ async function fibonacciSequence(x) {
         }
     } else if (save.checked === true && x > 50) {
         showLoader()
-        alert.innerText = "number can't be bigger than 50"
+        alertOver50.innerText = "number can't be bigger than 50"
     } else if (save.checked === true) {
         if (re.test(x) === false) {
             setTimeout(() => {
@@ -112,7 +112,7 @@ function refreshHistory() {
 function validateInput() {
     if (inputField.value > 50) {
         setTimeout(() => {
-            alert.classList.replace('hide', 'show');
+            alertOver50.classList.replace('hide', 'show');
             answer.className = 'hide';
             inputField.classList.add('invalid');
         }, 600)
@@ -123,7 +123,7 @@ function validateInput() {
 function validNumber() {
     if (inputField.value == "") {
         inputField.classList.remove("invalid");
-        alert.classList.replace('show', 'hide');
+        alertOver50.classList.replace('show', 'hide');
         answer.classList.replace('show', 'hide');
         answer.classList.replace('error', 'hide');
     }
@@ -134,7 +134,7 @@ function showLoader() {
     validateInput()
     if (inputField.value < 50) {
         inputField.classList.remove('invalid');
-        alert.classList.replace('show', 'hide');
+        alertOver50.classList.replace('show', 'hide');
         loader.classList.replace('hide', 'show');
         answer.className = 'hide';
         setTimeout(() => {
@@ -149,16 +149,18 @@ function fibonacciResult() {
     fibonacciSequence(inputField.value);
 }
 
+// Window Loaded Completely Function
+function loadWindow() {
+    setTimeout(() => {
+        loaderTimeline.classList.replace('show', 'hide');
+    }, 2000)
+    setTimeout(() => {
+        fibonacciHistory()
+    }, 1300)
+}
+
 // Event Listeners
+window.addEventListener('load', loadWindow);
 button.addEventListener('click', fibonacciResult);
 button.addEventListener('click', refreshHistory);
 inputField.addEventListener('keyup', validNumber);
-
-// Window Loaded Completely Functions
-setTimeout(() => {
-    loaderTimeline.classList.replace('show', 'hide');
-}, 2000)
-
-window.onload = setTimeout(() => {
-    fibonacciHistory()
-}, 1300)
