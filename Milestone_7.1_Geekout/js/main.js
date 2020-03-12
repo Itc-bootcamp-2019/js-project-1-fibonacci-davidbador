@@ -72,7 +72,7 @@ async function fibonacciHistory() {
 function refreshHistory() {
     if (inputField.value > 50) {
         showLoader()
-    } else if ((save.checked === false) || (save.checked === true && re.test(inputField.value) === false)) {
+    } else if (re.test(inputField.value) === false) {
         loaderTimeline.classList.replace('show', 'hide');
         history.classList.replace('hide', 'show');
     } else {
