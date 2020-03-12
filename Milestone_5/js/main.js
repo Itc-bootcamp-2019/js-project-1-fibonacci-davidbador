@@ -4,12 +4,13 @@ const button = document.getElementById('buttonForResult');
 const answer = document.getElementById('resultArea');
 const re = /^\d+$/;
 
+// JS Class Modifiers
+answer.className = 'hide';
+
 // Fibonacci Fetch API Function
 function fibonacciSequence(x) {
     if (re.test(x) === false) {
-        setTimeout(() => {
-            answer.innerText = 'Please enter a valid number';
-        }, 1000);
+        answer.innerText = 'Please enter a valid number';
     } else {
         fetch('http://localhost:5050/fibonacci/' + x).then(response => {
             if (response.ok) {
@@ -17,9 +18,7 @@ function fibonacciSequence(x) {
             } else {
                 response.text().then(errorMessage => {
                     if (x < 1) {
-                        setTimeout(() => {
-                            answer.innerText = `${errorMessage}`;
-                        }, 1000);
+                        answer.innerText = `${errorMessage}`;
                     }
                 })
             }
