@@ -131,12 +131,7 @@ function spinnerToResult() {
 
 // Window Loaded Completely Function
 function loadWindow() {
-    setTimeout(() => {
-        loaderTimeline.classList.replace('show', 'hide');
-    }, 2000)
-    setTimeout(() => {
-        fibonacciHistory()
-    }, 1300)
+    fibonacciHistory()
 }
 
 // Event Listeners
