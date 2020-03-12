@@ -118,9 +118,20 @@ async function fibonacciHistory() {
 function refreshHistory() {
     if (inputField.value > 50) {
         showLoader()
-    } else if ((save.checked && re.test(inputField.value) === false)) {
+    } else if ((save.checked === false) || (save.checked && re.test(inputField.value) === false)) {
         loaderTimeline.classList.replace('show', 'hide');
         history.classList.replace('hide', 'show');
+        if (numberUp.selected || numberDown.selected || dateUp.selected || dateDown.selected) {
+            let child = history.lastElementChild;
+            while (child) {
+                history.removeChild(child);
+                child = history.lastElementChild;
+            }
+            if (save.checked) {
+                loaderTimeline.classList.replace('hide', 'show')
+            }
+            fibonacciHistory()
+        }
     } else if (numberUp.selected || numberDown.selected || dateUp.selected || dateDown.selected) {
         let child = history.lastElementChild;
         while (child) {
