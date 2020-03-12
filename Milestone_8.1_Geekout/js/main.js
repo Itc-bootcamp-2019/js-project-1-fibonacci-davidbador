@@ -25,14 +25,14 @@ answer.className = 'hide'
 async function fibonacciSequence(x) {
     showLoader()
     if (save.checked === false) {
-        if (x >= 0 && re.test(x) === true) {
+        if (x >= 0 && re.test(x)) {
             spinnerToResult()
             answer.innerText = fibonacciRecursion(inputField.value);
         } else if (x < 0 || re.test(x) === false) {
             spinnerToResult()
             answer.innerText = 'Please enter a valid number greater than or equal to 0'
         }
-    } else if (save.checked === true && x > 50) {
+    } else if (save.checked && x > 50) {
         loader.classList.replace('show', 'hide')
         alertOver50.innerText = "number can't be bigger than 50"
     } else if (save.checked === true) {
@@ -79,23 +79,23 @@ function fibonacciRecursion(x) {
 async function fibonacciHistory() {
     let response = await fetch('http://localhost:5050/getFibonacciResults')
     let data = await response.json()
-    if (sort.selected === true) {
+    if (sort.selected) {
         data.results.sort(function (a, b) {
             return new Date(b.createdDate) - new Date(a.createdDate)
         })
-    } else if (dateUp.selected === true) {
+    } else if (dateUp.selected) {
         data.results.sort(function (a, b) {
             return new Date(b.createdDate) - new Date(a.createdDate)
         })
-    } else if (dateDown.selected === true) {
+    } else if (dateDown.selected) {
         data.results.sort(function (a, b) {
             return new Date(a.createdDate) - new Date(b.createdDate)
         })
-    } else if (numberUp.selected === true) {
+    } else if (numberUp.selected) {
         data.results.sort(function (a, b) {
             return b.number - a.number
         })
-    } else if (numberDown.selected === true) {
+    } else if (numberDown.selected) {
         data.results.sort(function (a, b) {
             return a.number - b.number
         })
@@ -118,20 +118,17 @@ async function fibonacciHistory() {
 function refreshHistory() {
     if (inputField.value > 50) {
         showLoader()
-    } else if ((numberUp.selected === true || numberDown.selected === true || dateUp.selected === true || dateDown.selected === true) && re.test(inputField.value) === false) {
+    } else if ((save.checked && re.test(inputField.value) === false)) {
         loaderTimeline.classList.replace('show', 'hide');
         history.classList.replace('hide', 'show');
-    } else if (numberUp.selected === true || numberDown.selected === true || dateUp.selected === true || dateDown.selected === true) {
+    } else if (numberUp.selected || numberDown.selected || dateUp.selected || dateDown.selected) {
         let child = history.lastElementChild;
         while (child) {
             history.removeChild(child);
             child = history.lastElementChild;
         }
-        loaderTimeline.classList.replace('hide', 'show');
+        loaderTimeline.classList.replace('hide', 'show')
         fibonacciHistory()
-    } else if ((save.checked === false) || (save.checked === true && re.test(inputField.value) === false)) {
-        loaderTimeline.classList.replace('show', 'hide');
-        history.classList.replace('hide', 'show');
     } else {
         loaderTimeline.classList.replace('hide', 'show');
         let child = history.lastElementChild;
@@ -167,7 +164,7 @@ function showLoader() {
     validateInput()
     if (re.test(inputField.value) === false) {
         inputField.classList.add('invalid');
-    } else if (inputField.value < 50 && re.test(inputField.value) === true) {
+    } else if (inputField.value < 50 && re.test(inputField.value)) {
         answer.className = 'hide'
         inputField.classList.remove('invalid');
         alertOver50.classList.replace('show', 'hide');
