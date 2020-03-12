@@ -13,42 +13,45 @@ const re = /^\d+$/;
 loader.classList.add('hide');
 alertOver50.classList.add('hide');
 loaderTimeline.classList.add('show');
+answer.className = 'hide'
 
 // Asynchronous Fibonacci Calculator Function
 async function fibonacciSequence(x) {
     showLoader()
     if (save.checked === false) {
         if (x >= 0 && re.test(x) === true) {
+            spinnerToResult()
             answer.innerText = fibonacciRecursion(inputField.value);
         } else if (x < 0 || re.test(x) === false) {
+            spinnerToResult()
             answer.innerText = 'Please enter a valid number greater than or equal to 0'
         }
     } else if (save.checked === true && x > 50) {
-        showLoader()
+        loader.classList.replace('show', 'hide')
         alertOver50.innerText = "number can't be bigger than 50"
     } else if (save.checked === true) {
         if (re.test(x) === false) {
-            setTimeout(() => {
-                answer.innerText = 'Please enter a valid number';
-            }, 1000);
+            spinnerToResult()
+            answer.innerText = 'Please enter a valid number';
         } else {
             let response = await fetch('http://localhost:5050/fibonacci/' + x);
             if (response.status == 200) {
                 let data = await response.json();
-                setTimeout(() => {
-                    answer.innerText = data.result;
-                }, 900)
+                showLoader()
+                spinnerToResult()
+                answer.innerText = data.result;
             } else {
                 let text = await response.text();
                 if (x == 42) {
-                    setTimeout(() => {
-                        answer.className = 'error';
-                        answer.innerText = `Server Error: ${text}`;
-                    }, 1400)
+                    showLoader()
+                    loader.classList.replace('show', 'hide')
+                    answer.className = 'error';
+                    answer.innerText = `Server Error: ${text}`;
                 } else if (x < 1) {
-                    setTimeout(() => {
-                        answer.innerText = `${text}`;
-                    }, 1000);
+                    showLoader()
+                    spinnerToResult()
+                    answer.className = 'error';
+                    answer.innerText = `${text}`;
                 }
             }
 
@@ -83,39 +86,35 @@ async function fibonacciHistory() {
         historyChild.id = 'childDiv'
         historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
     })
+    if (history.className === 'show') {
+        loaderTimeline.classList.replace('show', 'hide');
+    }
 }
 
 // Fibonacci Results History Refresh Function
 function refreshHistory() {
     if (inputField.value > 50) {
         showLoader()
-    } else if (save.checked === false) {
+    } else if ((save.checked === false) || (save.checked === true && re.test(inputField.value) === false)) {
         loaderTimeline.classList.replace('show', 'hide');
         history.classList.replace('hide', 'show');
     } else {
         loaderTimeline.classList.replace('hide', 'show');
-        history.classList.replace('show', 'hide');
         let child = history.lastElementChild;
         while (child) {
             history.removeChild(child);
             child = history.lastElementChild;
         }
-        setTimeout(() => {
-            loaderTimeline.classList.replace('show', 'hide');
-            history.classList.replace('hide', 'show');
-            fibonacciHistory();
-        }, 900)
+        fibonacciHistory();
     }
 }
 
 // Input Field Invalid Validation Function
 function validateInput() {
     if (inputField.value > 50) {
-        setTimeout(() => {
-            alertOver50.classList.replace('hide', 'show');
-            answer.className = 'hide';
-            inputField.classList.add('invalid');
-        }, 600)
+        alertOver50.classList.replace('hide', 'show');
+        answer.className = 'hide';
+        inputField.classList.add('invalid');
     }
 }
 
@@ -132,15 +131,13 @@ function validNumber() {
 // Loader Display Function
 function showLoader() {
     validateInput()
-    if (inputField.value < 50) {
+    if (re.test(inputField.value) === false) {
+        inputField.classList.add('invalid');
+    } else if (inputField.value < 50 && re.test(inputField.value) === true) {
+        answer.className = 'hide'
         inputField.classList.remove('invalid');
         alertOver50.classList.replace('show', 'hide');
         loader.classList.replace('hide', 'show');
-        answer.className = 'hide';
-        setTimeout(() => {
-            loader.classList.replace("show", "hide");
-            answer.className = answer.className.replace("hide", "show");
-        }, 2000);
     }
 }
 
@@ -149,14 +146,15 @@ function fibonacciResult() {
     fibonacciSequence(inputField.value);
 }
 
+// Class Changing for Spinner and Result Function
+function spinnerToResult() {
+    loader.classList.replace('show', 'hide')
+    answer.className = 'show'
+}
+
 // Window Loaded Completely Function
 function loadWindow() {
-    setTimeout(() => {
-        loaderTimeline.classList.replace('show', 'hide');
-    }, 2000)
-    setTimeout(() => {
-        fibonacciHistory()
-    }, 1300)
+    fibonacciHistory()
 }
 
 // Event Listeners
