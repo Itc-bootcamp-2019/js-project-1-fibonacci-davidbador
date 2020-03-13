@@ -17,7 +17,7 @@ function fibonacciSequence (x) {
     } else if (x == 0) {
         return 0;
     }
-    return y
+    return y;
 }
 
 // innerText identifiers
