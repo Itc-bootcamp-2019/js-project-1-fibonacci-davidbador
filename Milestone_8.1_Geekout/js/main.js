@@ -106,7 +106,6 @@ async function fibonacciHistory() {
         let milliseconds = new Date(object.createdDate);
         let historyChild = document.createElement('div');
         history.appendChild(historyChild);
-        history.classList.add('show');
         historyChild.className = 'childDiv';
         historyChild.id = 'childDiv';
         historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString();
