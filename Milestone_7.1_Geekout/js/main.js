@@ -10,36 +10,37 @@ const re = /^\d+$/;
 
 // JS Class Modifiers
 loader.classList.add('hide');
+answer.className = 'hide';
 alertOver50.classList.add('hide');
 loaderTimeline.classList.add('show');
-answer.className = 'hide'
+history.className = 'show';
 
 // Asynchronous Fibonacci Calculator Function
 async function fibonacciSequence(x) {
-    showLoader()
+    showLoader();
     if (x > 50) {
-        loader.classList.replace('show', 'hide')
-        alertOver50.innerText = "number can't be bigger than 50"
+        loader.classList.replace('show', 'hide');
+        alertOver50.innerText = "number can't be bigger than 50";
     } else if (re.test(x) === false) {
-        spinnerToResult()
+        spinnerToResult();
         answer.innerText = 'Please enter a valid number';
     } else {
         let response = await fetch('http://localhost:5050/fibonacci/' + x);
         if (response.status == 200) {
             let data = await response.json();
-            showLoader()
-            spinnerToResult()
+            showLoader();
+            spinnerToResult();
             answer.innerText = data.result;
         } else {
             let text = await response.text();
             if (x == 42) {
-                showLoader()
-                loader.classList.replace('show', 'hide')
+                showLoader();
+                loader.classList.replace('show', 'hide');
                 answer.className = 'error';
                 answer.innerText = `Server Error: ${text}`;
             } else if (x < 1) {
-                showLoader()
-                spinnerToResult()
+                showLoader();
+                spinnerToResult();
                 answer.className = 'error';
                 answer.innerText = `${text}`;
             }
@@ -49,19 +50,18 @@ async function fibonacciSequence(x) {
 
 // Asynchronous Fibonacci Results History Function
 async function fibonacciHistory() {
-    let response = await fetch('http://localhost:5050/getFibonacciResults')
-    let data = await response.json()
+    let response = await fetch('http://localhost:5050/getFibonacciResults');
+    let data = await response.json();
     data.results.sort(function (a, b) {
-        return new Date(b.createdDate) - new Date(a.createdDate)
+        return new Date(b.createdDate) - new Date(a.createdDate);
     })
     data.results.forEach(function (object) {
         let milliseconds = new Date(object.createdDate);
         let historyChild = document.createElement('div');
         history.appendChild(historyChild);
-        history.classList.add('show')
-        historyChild.className = 'childDiv'
-        historyChild.id = 'childDiv'
-        historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
+        historyChild.className = 'childDiv';
+        historyChild.id = 'childDiv';
+        historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString();
     })
     if (history.className === 'show') {
         loaderTimeline.classList.replace('show', 'hide');
@@ -71,7 +71,7 @@ async function fibonacciHistory() {
 // Fibonacci Results History Refresh Function
 function refreshHistory() {
     if (inputField.value > 50) {
-        showLoader()
+        showLoader();
     } else if (re.test(inputField.value) === false) {
         loaderTimeline.classList.replace('show', 'hide');
         history.classList.replace('hide', 'show');
@@ -107,11 +107,11 @@ function validNumber() {
 
 // Loader Display Function
 function showLoader() {
-    validateInput()
+    validateInput();
     if (re.test(inputField.value) === false) {
         inputField.classList.add('invalid');
     } else if (inputField.value < 50 && re.test(inputField.value) === true) {
-        answer.className = 'hide'
+        answer.className = 'hide';
         inputField.classList.remove('invalid');
         alertOver50.classList.replace('show', 'hide');
         loader.classList.replace('hide', 'show');
@@ -120,18 +120,18 @@ function showLoader() {
 
 // Fibonacci Result Function
 function fibonacciResult() {
-    fibonacciSequence(inputField.value)
+    fibonacciSequence(inputField.value);
 }
 
 // Class Changing for Spinner and Result Function
 function spinnerToResult() {
-    loader.classList.replace('show', 'hide')
-    answer.className = 'show'
+    loader.classList.replace('show', 'hide');
+    answer.className = 'show';
 }
 
 // Window Loaded Completely Function
 function loadWindow() {
-    fibonacciHistory()
+    fibonacciHistory();
 }
 
 // Event Listeners

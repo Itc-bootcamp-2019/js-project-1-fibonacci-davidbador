@@ -71,8 +71,12 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* Fibonacci Results History Styling */
-.resultsTimeline {
+#resultsTimeline {
   margin-top: 120px;
+}
+
+#resultsTimeline.hide {
+  display: none;
 }
 
 .resultsHistoryHeading {
