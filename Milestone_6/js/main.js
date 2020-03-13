@@ -14,36 +14,36 @@ alertOver50.classList.add('hide');
 
 // Fibonacci Fetch API Function
 function fibonacciSequence(x) {
-    showLoader()
+    showLoader();
     if (x > 50) {
-        loader.classList.replace('show', 'hide')
-        alertOver50.innerText = "number can't be bigger than 50"
+        loader.classList.replace('show', 'hide');
+        alertOver50.innerText = "number can't be bigger than 50";
     } else if (re.test(x) === false) {
-        spinnerToResult()
+        spinnerToResult();
         answer.innerText = 'Please enter a valid number';
     } else {
         fetch('http://localhost:5050/fibonacci/' + x)
             .then(response => {
                 if (response.status === 200) {
-                    return response.json()
+                    return response.json();
                 } else {
                     response.text().then(errorMessage => {
                         if (x == 42) {
-                            showLoader()
-                            loader.classList.replace('show', 'hide')
+                            showLoader();
+                            loader.classList.replace('show', 'hide');
                             answer.className = 'error';
-                            answer.innerText = `Server Error: ${text}`;
+                            answer.innerText = `Server Error: ${errorMessage}`;
                         } else if (x < 1) {
-                            showLoader()
-                            spinnerToResult()
+                            showLoader();
+                            spinnerToResult();
                             answer.className = 'error';
-                            answer.innerText = `${text}`;
+                            answer.innerText = `${errorMessage}`;
                         }
                     })
                 }
             }).then((data) => {
-                showLoader()
-                spinnerToResult()
+                showLoader();
+                spinnerToResult();
                 answer.innerText = data.result;
             })
     }
@@ -70,11 +70,11 @@ function validNumber() {
 
 // Loader Display Function
 function showLoader() {
-    validateInput()
+    validateInput();
     if (re.test(inputField.value) === false) {
         inputField.classList.add('invalid');
     } else if (inputField.value < 50 && re.test(inputField.value) === true) {
-        answer.className = 'hide'
+        answer.className = 'hide';
         inputField.classList.remove('invalid');
         alertOver50.classList.replace('show', 'hide');
         loader.classList.replace('hide', 'show');
@@ -88,8 +88,8 @@ function fibonacciResult() {
 
 // Class Changing for Spinner and Result Function
 function spinnerToResult() {
-    loader.classList.replace('show', 'hide')
-    answer.className = 'show'
+    loader.classList.replace('show', 'hide');
+    answer.className = 'show';
 }
 
 // Event Listeners
