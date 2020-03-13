@@ -33,17 +33,17 @@
 
         <!-- Save Calculation Checkbox -->
         <div>
-            <input type="checkbox" id="saveCalculation"><label class="saveLabel">Save Calculation</label>
+            <input type="checkbox" id="saveCalculation" checked><label class="saveLabel">Save Calculation</label>
             <span id="alert" class="alert alert-danger">
             </span>
         </div>
 
         <!-- Fibonacci Results History Heading -->
-        <div class="row resultsTimeline">
+        <div class="row" id="resultsTimeline">
             <div class="resultsHistoryHeading">Results</div>
 
             <!-- Fibonacci Results History Loader -->
-            <span id="loaderTimeline" class="spinner-border timelineSpinner" role="status">
+            <span id="loaderTimeline" class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
             </span>
         </div>

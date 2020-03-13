@@ -5,6 +5,7 @@ const inputField = document.getElementById('chosenNumber');
 const button = document.getElementById('buttonForResult');
 const answer = document.getElementById('resultArea');
 const alertOver50 = document.getElementById('alert');
+const resultsHeading = document.getElementById('resultsTimeline');
 const history = document.getElementById('resultsHistory');
 const save = document.getElementById('saveCalculation');
 const re = /^\d+$/;
@@ -17,45 +18,46 @@ const select = document.getElementById('select');
 
 // JS Class Modifiers
 loader.classList.add('hide');
+answer.className = 'hide';
 alertOver50.classList.add('hide');
 loaderTimeline.classList.add('show');
-answer.className = 'hide'
+history.className = 'show';
 
 // Asynchronous Fibonacci Calculator Function
 async function fibonacciSequence(x) {
-    showLoader()
+    showLoader();
     if (save.checked === false) {
         if (x >= 0 && re.test(x)) {
-            spinnerToResult()
+            spinnerToResult();
             answer.innerText = fibonacciRecursion(inputField.value);
         } else if (x < 0 || re.test(x) === false) {
-            spinnerToResult()
-            answer.innerText = 'Please enter a valid number greater than or equal to 0'
+            spinnerToResult();
+            answer.innerText = 'Please enter a valid number greater than or equal to 0';
         }
     } else if (save.checked && x > 50) {
-        loader.classList.replace('show', 'hide')
-        alertOver50.innerText = "number can't be bigger than 50"
+        loader.classList.replace('show', 'hide');
+        alertOver50.innerText = "number can't be bigger than 50";
     } else if (save.checked === true) {
         if (re.test(x) === false) {
-            spinnerToResult()
+            spinnerToResult();
             answer.innerText = 'Please enter a valid number';
         } else {
             let response = await fetch('http://localhost:5050/fibonacci/' + x);
             if (response.status == 200) {
                 let data = await response.json();
-                showLoader()
-                spinnerToResult()
+                showLoader();
+                spinnerToResult();
                 answer.innerText = data.result;
             } else {
                 let text = await response.text();
                 if (x == 42) {
-                    showLoader()
-                    loader.classList.replace('show', 'hide')
+                    showLoader();
+                    loader.classList.replace('show', 'hide');
                     answer.className = 'error';
                     answer.innerText = `Server Error: ${text}`;
                 } else if (x < 1) {
-                    showLoader()
-                    spinnerToResult()
+                    showLoader();
+                    spinnerToResult();
                     answer.className = 'error';
                     answer.innerText = `${text}`;
                 }
@@ -77,37 +79,37 @@ function fibonacciRecursion(x) {
 
 // Asynchronous Fibonacci Results History Function
 async function fibonacciHistory() {
-    let response = await fetch('http://localhost:5050/getFibonacciResults')
-    let data = await response.json()
+    let response = await fetch('http://localhost:5050/getFibonacciResults');
+    let data = await response.json();
     if (sort.selected) {
         data.results.sort(function (a, b) {
-            return new Date(b.createdDate) - new Date(a.createdDate)
+            return new Date(b.createdDate) - new Date(a.createdDate);
         })
     } else if (dateUp.selected) {
         data.results.sort(function (a, b) {
-            return new Date(b.createdDate) - new Date(a.createdDate)
+            return new Date(b.createdDate) - new Date(a.createdDate);
         })
     } else if (dateDown.selected) {
         data.results.sort(function (a, b) {
-            return new Date(a.createdDate) - new Date(b.createdDate)
+            return new Date(a.createdDate) - new Date(b.createdDate);
         })
     } else if (numberUp.selected) {
         data.results.sort(function (a, b) {
-            return b.number - a.number
+            return b.number - a.number;
         })
     } else if (numberDown.selected) {
         data.results.sort(function (a, b) {
-            return a.number - b.number
+            return a.number - b.number;
         })
     }
     data.results.forEach(function (object) {
         let milliseconds = new Date(object.createdDate);
         let historyChild = document.createElement('div');
         history.appendChild(historyChild);
-        history.classList.add('show')
-        historyChild.className = 'childDiv'
-        historyChild.id = 'childDiv'
-        historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
+        history.classList.add('show');
+        historyChild.className = 'childDiv';
+        historyChild.id = 'childDiv';
+        historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString();
     })
     if (history.className === 'show') {
         loaderTimeline.classList.replace('show', 'hide');
@@ -117,8 +119,10 @@ async function fibonacciHistory() {
 // Fibonacci Results History Refresh Function
 function refreshHistory() {
     if (inputField.value > 50) {
-        showLoader()
-    } else if ((save.checked === false) || (save.checked && re.test(inputField.value) === false)) {
+        showLoader();
+    } else if (save.checked === false) {
+        history.classList.replace('show', 'hide')
+    } else if (save.checked && re.test(inputField.value) === false) {
         loaderTimeline.classList.replace('show', 'hide');
         history.classList.replace('hide', 'show');
         if (numberUp.selected || numberDown.selected || dateUp.selected || dateDown.selected) {
@@ -128,9 +132,9 @@ function refreshHistory() {
                 child = history.lastElementChild;
             }
             if (save.checked) {
-                loaderTimeline.classList.replace('hide', 'show')
+                loaderTimeline.classList.replace('hide', 'show');
             }
-            fibonacciHistory()
+            fibonacciHistory();
         }
     } else if (numberUp.selected || numberDown.selected || dateUp.selected || dateDown.selected) {
         let child = history.lastElementChild;
@@ -138,8 +142,8 @@ function refreshHistory() {
             history.removeChild(child);
             child = history.lastElementChild;
         }
-        loaderTimeline.classList.replace('hide', 'show')
-        fibonacciHistory()
+        loaderTimeline.classList.replace('hide', 'show');
+        fibonacciHistory();
     } else {
         loaderTimeline.classList.replace('hide', 'show');
         let child = history.lastElementChild;
@@ -172,11 +176,11 @@ function validNumber() {
 
 // Loader Display Function
 function showLoader() {
-    validateInput()
+    validateInput();
     if (re.test(inputField.value) === false) {
         inputField.classList.add('invalid');
     } else if (inputField.value < 50 && re.test(inputField.value)) {
-        answer.className = 'hide'
+        answer.className = 'hide';
         inputField.classList.remove('invalid');
         alertOver50.classList.replace('show', 'hide');
         loader.classList.replace('hide', 'show');
@@ -185,7 +189,7 @@ function showLoader() {
 
 // Fibonacci Results History Order Selection Function
 function sortOrder() {
-    refreshHistory()
+    refreshHistory();
 }
 
 // Fibonacci Result Function
@@ -195,13 +199,26 @@ function fibonacciResult() {
 
 // Class Changing for Spinner and Result Function
 function spinnerToResult() {
-    loader.classList.replace('show', 'hide')
-    answer.className = 'show'
+    loader.classList.replace('show', 'hide');
+    answer.className = 'show';
+}
+
+// Results History Display Function
+function displayResultsHistory() {
+    if (save.checked === false) {
+        resultsHeading.classList.add('hide');
+        history.className = 'hide';
+        select.classList.add('hide');
+    } else {
+        resultsHeading.classList.remove('hide');
+        history.className = 'show';
+        select.classList.remove('hide');
+    }
 }
 
 // Window Loaded Completely Function
 function loadWindow() {
-    fibonacciHistory()
+    fibonacciHistory();
 }
 
 // Event Listeners
@@ -209,4 +226,5 @@ window.addEventListener('load', loadWindow);
 button.addEventListener('click', fibonacciResult);
 button.addEventListener('click', refreshHistory);
 inputField.addEventListener('keyup', validNumber);
+save.addEventListener('click', displayResultsHistory);
 select.addEventListener('change', sortOrder);
