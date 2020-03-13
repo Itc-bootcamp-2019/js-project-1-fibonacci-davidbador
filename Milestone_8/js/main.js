@@ -5,6 +5,7 @@ const inputField = document.getElementById('chosenNumber');
 const button = document.getElementById('buttonForResult');
 const answer = document.getElementById('resultArea');
 const alertOver50 = document.getElementById('alert');
+const resultsHeading = document.getElementById('resultsTimeline');
 const history = document.getElementById('resultsHistory');
 const save = document.getElementById('saveCalculation');
 const re = /^\d+$/;
@@ -13,7 +14,8 @@ const re = /^\d+$/;
 loader.classList.add('hide');
 alertOver50.classList.add('hide');
 loaderTimeline.classList.add('show');
-answer.className = 'hide'
+answer.className = 'hide';
+history.className = 'show';
 
 // Asynchronous Fibonacci Calculator Function
 async function fibonacciSequence(x) {
@@ -81,7 +83,6 @@ async function fibonacciHistory() {
         let milliseconds = new Date(object.createdDate);
         let historyChild = document.createElement('div');
         history.appendChild(historyChild);
-        history.classList.add('show')
         historyChild.className = 'childDiv'
         historyChild.id = 'childDiv'
         historyChild.innerHTML = "The Fibonacci of <strong>" + object.number + "</strong> is <strong>" + object.result + "</strong>. Calculated at: " + milliseconds.toString()
@@ -95,7 +96,9 @@ async function fibonacciHistory() {
 function refreshHistory() {
     if (inputField.value > 50) {
         showLoader()
-    } else if ((save.checked === false) || (save.checked === true && re.test(inputField.value) === false)) {
+    } else if (save.checked === false) {
+        history.classList.replace('show', 'hide')
+    } else if (save.checked && re.test(inputField.value) === false) {
         loaderTimeline.classList.replace('show', 'hide');
         history.classList.replace('hide', 'show');
     } else {
@@ -152,6 +155,19 @@ function spinnerToResult() {
     answer.className = 'show'
 }
 
+// Results History Display Function
+function displayResultsHistory() {
+    if (save.checked === false) {
+        resultsHeading.classList.add('hide');
+        history.className = 'hide';
+        select.classList.add('hide');
+    } else {
+        resultsHeading.classList.remove('hide');
+        history.className = 'show';
+        select.classList.remove('hide');
+    }
+}
+
 // Window Loaded Completely Function
 function loadWindow() {
     fibonacciHistory()
@@ -162,3 +178,4 @@ window.addEventListener('load', loadWindow);
 button.addEventListener('click', fibonacciResult);
 button.addEventListener('click', refreshHistory);
 inputField.addEventListener('keyup', validNumber);
+save.addEventListener('click', displayResultsHistory);
