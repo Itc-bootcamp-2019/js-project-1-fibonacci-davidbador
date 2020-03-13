@@ -1,9 +1,9 @@
 /* Fibonacci Calculator Styling */
-label {
+#fibonacciOf {
   margin-right: 20px;
 }
 
-input {
+#chosenNumber {
   width: 5%;
 }
 
@@ -41,12 +41,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* Save Calculation Checkbox Styling */
-#saveCalculation {
-  margin-left: -30px;
-}
-
 .saveLabel {
-  margin-left: -20px;
+  margin-left: 10px;
   font-size: 12px;
 }
 
