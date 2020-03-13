@@ -14,7 +14,7 @@ function fibonacciSequence(x) {
     } else {
         fetch('http://localhost:5050/fibonacci/' + x).then(response => {
             if (response.ok) {
-                return response.json()
+                return response.json();
             } else {
                 response.text().then(errorMessage => {
                     if (x < 1) {
@@ -34,4 +34,4 @@ function fibonacciResult() {
 }
 
 // Event Listeners
-button.addEventListener('click', fibonacciResult)
+button.addEventListener('click', fibonacciResult);
