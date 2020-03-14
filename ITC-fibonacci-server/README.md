@@ -19,7 +19,7 @@ This is a Fibonacci server, implement in Node.js
 Clone the repo (all commands are in the terminal in linux/mac or cmd in windows)
 
 ```bash
-> git clone https://github.com/Itc-bootcamp-2019/js-project-1-fibonacci-davidbador/ITC-fibonacci-server.git
+> git clone https://github.com/Itc-bootcamp-2019/js-project-1-fibonacci-davidbador.git
 ```
 
 Then enter to the created folder
@@ -73,7 +73,7 @@ This is a Fibonacci server, implement in Node.js
 Clone the repo (all commands are in the terminal in linux/mac or cmd in windows)
 
 ```bash
-> git clone https://github.com/Itc-bootcamp-2019/js-project-1-fibonacci-davidbador/ITC-fibonacci-server.git
+> git clone https://github.com/Itc-bootcamp-2019/js-project-1-fibonacci-davidbador.git
 ```
 
 Then enter to the created folder
