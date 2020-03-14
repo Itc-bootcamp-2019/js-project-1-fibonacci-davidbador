@@ -13,8 +13,8 @@ function fibonacciSequence(x) {
     if (x >= 1) {
         for (let i = 1; i < x; i++) {
             y = firstNum + secondNum;
-            secondNum = firstNum;
-            firstNum = y;
+            firstNum = secondNum;
+            secondNum = y;
         }
     } else if (x == 0) {
         return 0;
