@@ -11,15 +11,15 @@ function fibonacciSequence(x) {
     let y = 1;
 
     if (x >= 1) {
-        for (let i = 0; i < x; i++) {
-            y = firstNum + secondNum
+        for (let i = 1; i < x; i++) {
+            y = firstNum + secondNum;
             secondNum = firstNum;
             firstNum = y;
         }
     } else if (x == 0) {
         return 0;
     }
-    return y
+    return y;
 }
 
 // Fibonacci Calculation Result Function
@@ -34,4 +34,4 @@ function fibonacciResult() {
 }
 
 // Event Listeners
-button.addEventListener('click', fibonacciResult)
+button.addEventListener('click', fibonacciResult);
