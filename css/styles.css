@@ -1,0 +1,99 @@
+/* Fibonacci Calculator Styling */
+label {
+  margin-right: 20px;
+}
+
+input {
+  width: 5%;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.btn {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#resultArea.show {
+  visibility: visible;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#resultArea.error {
+  color: red;
+}
+
+/* Fibonacci Calculator Loader Styling */
+#loader.show {
+  display: inline-flex;
+  position: relative;
+  top: 8px;
+  left: 0;
+}
+
+#loader.hide, #resultArea.hide {
+  display: none;
+}
+
+/* Alert for numbers over 50 Styling */
+#alert.hide {
+  display: none;
+}
+
+#alert.show {
+  display: block;
+  font-size: 12px;
+  width: 165px;
+  position: absolute;
+  left: 50px;
+}
+
+.invalid {
+  border: 1px solid red;
+  color: red;
+}
+
+/* Fibonacci Results History Loader Styling */
+#loaderTimeline.hide {
+  display: none;
+}
+
+
+#loaderTimeline.show {
+  display: inline;
+  position: relative;
+  top: 12px;
+  left: 12px;
+}
+
+/* Fibonacci Results History Styling */
+#resultsTimeline {
+  margin-top: 120px;
+}
+
+.resultsHistoryHeading {
+  font-weight: bold;
+  font-size: 32px;
+  margin-left: 213px;
+}
+
+.childDiv {
+  border-bottom: 1px solid black;
+  width: 65%;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 200px;
+}
+
+#resultsHistory.hide {
+  display: none;
+}
+
+#resultsHistory.show {
+  display: block;
+}
