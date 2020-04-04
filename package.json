@@ -1,0 +1,24 @@
+{
+  "name": "bador_js_project_1",
+  "version": "1.0.0",
+  "description": "js-project-1-fibonacci-davidbador created by GitHub Classroom\r A Fibonacci Calculator that is split into milestones with the next being an improvement of the previous one. I utilized the Fetch API\r to grab the calculation function from a server and to grab the hardcoded error messages as well. The program was designed with Bootstrap 4.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Itc-bootcamp-2019/js-project-1-fibonacci-davidbador.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Itc-bootcamp-2019/js-project-1-fibonacci-davidbador/issues"
+  },
+  "homepage": "https://github.com/Itc-bootcamp-2019/js-project-1-fibonacci-davidbador#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
