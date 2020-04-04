@@ -24,25 +24,25 @@ loaderTimeline.classList.add('show');
 history.className = 'show';
 
 // Asynchronous Fibonacci Calculator Function
-async function fibonacciSequence(x) {
+async function fibonacciSequence(number) {
     showLoader();
     if (save.checked === false) {
-        if (x >= 0 && re.test(x)) {
+        if (number >= 0 && re.test(number)) {
             spinnerToResult();
             answer.innerText = fibonacciRecursion(inputField.value);
-        } else if (x < 0 || re.test(x) === false) {
+        } else if (number < 0 || re.test(number) === false) {
             spinnerToResult();
             answer.innerText = 'Please enter a valid number greater than or equal to 0';
         }
-    } else if (save.checked && x > 50) {
+    } else if (save.checked && number > 50) {
         loader.classList.replace('show', 'hide');
         alertOver50.innerText = "number can't be bigger than 50";
     } else if (save.checked === true) {
-        if (re.test(x) === false) {
+        if (re.test(number) === false) {
             spinnerToResult();
             answer.innerText = 'Please enter a valid number';
         } else {
-            let response = await fetch('http://localhost:5050/fibonacci/' + x);
+            let response = await fetch('http://localhost:5050/fibonacci/' + number);
             if (response.status == 200) {
                 let data = await response.json();
                 showLoader();
@@ -50,12 +50,12 @@ async function fibonacciSequence(x) {
                 answer.innerText = data.result;
             } else {
                 let text = await response.text();
-                if (x == 42) {
+                if (number == 42) {
                     showLoader();
                     loader.classList.replace('show', 'hide');
                     answer.className = 'error';
                     answer.innerText = `Server Error: ${text}`;
-                } else if (x < 1) {
+                } else if (number < 1) {
                     showLoader();
                     spinnerToResult();
                     answer.className = 'error';
@@ -67,12 +67,12 @@ async function fibonacciSequence(x) {
 }
 
 // Fibonacci Recursive Calculation Function
-function fibonacciRecursion(x) {
-    if (x > 1) {
-        return fibonacciRecursion(x - 1) + fibonacciRecursion(x - 2);
-    } else if (x == 1) {
+function fibonacciRecursion(number) {
+    if (number > 1) {
+        return fibonacciRecursion(number - 1) + fibonacciRecursion(number - 2);
+    } else if (number == 1) {
         return 1;
-    } else if (x == 0) {
+    } else if (number == 0) {
         return 0;
     }
 }
@@ -82,27 +82,27 @@ async function fibonacciHistory() {
     let response = await fetch('http://localhost:5050/getFibonacciResults');
     let data = await response.json();
     if (sort.selected) {
-        data.results.sort(function (a, b) {
+        data.sort(function (a, b) {
             return new Date(b.createdDate) - new Date(a.createdDate);
         })
     } else if (dateUp.selected) {
-        data.results.sort(function (a, b) {
+        data.sort(function (a, b) {
             return new Date(b.createdDate) - new Date(a.createdDate);
         })
     } else if (dateDown.selected) {
-        data.results.sort(function (a, b) {
+        data.sort(function (a, b) {
             return new Date(a.createdDate) - new Date(b.createdDate);
         })
     } else if (numberUp.selected) {
-        data.results.sort(function (a, b) {
+        data.sort(function (a, b) {
             return b.number - a.number;
         })
     } else if (numberDown.selected) {
-        data.results.sort(function (a, b) {
+        data.sort(function (a, b) {
             return a.number - b.number;
         })
     }
-    data.results.forEach(function (object) {
+    data.forEach(function (object) {
         let milliseconds = new Date(object.createdDate);
         let historyChild = document.createElement('div');
         history.appendChild(historyChild);
